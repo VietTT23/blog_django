@@ -19,7 +19,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    pass
 
 
 class Comment(models.Model):
