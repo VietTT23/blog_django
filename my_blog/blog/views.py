@@ -46,8 +46,9 @@ def post_detail(request, slug):
 
 
 def post_list(request):
+    template_name = 'blog/index.html'
     object_list = Post.objects.filter(status=1).order_by('-created_on')
-    paginator = Paginator(object_list, 1)  # 3 posts in each page
+    paginator = Paginator(object_list, 3)  # 3 posts in each page
     page = request.GET.get('page')
     try:
         num_post_listt = paginator.page(page)
@@ -58,4 +59,9 @@ def post_list(request):
         # If page is out of range deliver last page of results
         num_post_listt = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/index.html', {'page': page, 'post_list': num_post_listt})
+    context = {
+        'page': page,
+        'post_list': num_post_listt
+    }
+
+    return render(request, template_name, context)
